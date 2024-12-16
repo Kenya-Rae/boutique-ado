@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -37,6 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites', # Used by social account app to create callback URLs, when connecting connecting social media.
+    'allauth',
+    'allauth.account', # Allows basic user account functions i.e logging in and out.
+    'allauth.socialaccount', # Optional -- requires install using `django-allauth[socialaccount]`. Handles logging in via a social media account.
 ]
 
 MIDDLEWARE = [
@@ -59,13 +64,33 @@ TEMPLATES = [
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
-                'django.template.context_processors.request',
+                'django.template.context_processors.request', # required by allauth (allows Django & allauth to access the HTTP request object in templates)
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
         },
     },
 ]
+
+AUTHENTICATION_BACKENDS = (
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by email
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+
+SITE_ID = 1 # Used by social account app to create callback URLs, when connecting connecting social media.
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email' # tells allauth we want authentication via username or email.
+ACCOUNT_EMAIL_REQUIRED = True # email requried for site.
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory' # Veryfing email is mandotory so we know users are using a real email.
+ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = True # Requried to enter twice on sign up page to ensure no errors.
+ACCOUNT_USERNAME_MIN_LENGTH = 4 # username required to be minimum length of 4 characters.
+LOGIN_URL = '/accounts/login/' # specifying a login url.
+LOGIN_REDIRECT_URL = '/' # redirecting back to homepage after logging in.
 
 WSGI_APPLICATION = 'boutique_ado.wsgi.application'
 
