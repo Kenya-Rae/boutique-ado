@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'allauth.account', # Allows basic user account functions i.e logging in and out.
     'allauth.socialaccount', # Optional -- requires install using `django-allauth[socialaccount]`. Handles logging in via a social media account.
     'home',
+    'products',
 ]
 
 MIDDLEWARE = [
