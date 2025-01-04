@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount', # Optional -- requires install using `django-allauth[socialaccount]`. Handles logging in via a social media account.
     'home',
     'products',
+    'bag',
 ]
 
 MIDDLEWARE = [
