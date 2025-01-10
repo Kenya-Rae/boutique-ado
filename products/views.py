@@ -89,7 +89,7 @@ def add_product(request):
     else:
         form = ProductForm()
         
-    template = 'products/add_product.html'
+    template = 'products/add_products.html'
     context = {
         'form': form,
     }
@@ -115,9 +115,9 @@ def edit_product(request, product_id):
             messages.error(request, 'Failed to update product. Please ensure the form is valid.')
     else:
         form = ProductForm(instance=product)
-        messages.info(request, f'You are editing {product.name}')
+        # messages.info(request, f'You are editing {product.name}')
 
-    template = 'products/edit_product.html'
+    template = 'products/edit_products.html'
     context = {
         'form': form,
         'product': product,
